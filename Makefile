@@ -3,13 +3,14 @@ CC = gcc
 SRC_DIR = src
 OBJ_DIR = build
 INC_DIR = include
+LIB_DIR = lib
 
 SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
 FINAL = main
 
-CFLAGS = -g -Wall -I$(INC_DIR)
+CFLAGS = -g -Wall -I$(INC_DIR) -Llib
 
 ifeq ($(OS), Windows_NT)
 LDFLAGS = -lws2_32 -lpthread -lglfw3 -lgdi32 -lglad

@@ -48,3 +48,8 @@ int main(void) {
     glfwTerminate();
     return 0;
 }
+
+// int main(void) {
+    // Window win = window_create();
+    // window_loop(win);
+// }

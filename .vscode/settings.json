@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "glad.h": "c",
-        "glfw3.h": "c"
+        "glfw3.h": "c",
+        "time.h": "c"
     }
 }

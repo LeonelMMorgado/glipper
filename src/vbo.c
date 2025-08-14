@@ -5,12 +5,12 @@ VBO vbo_create(GLint type, bool dynamic) {
         .type = type,
         .dynamic = dynamic
     };
-    glGenBuffers(1, vbo.handle);
+    glGenBuffers(1, &vbo.handle);
     return vbo;
 }
 
 void vbo_delete(VBO vbo) {
-    glDeleteBuffers(1, vbo.handle);
+    glDeleteBuffers(1, &vbo.handle);
 }
 
 void vbo_bind(VBO vbo) {

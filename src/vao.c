@@ -7,7 +7,7 @@ VAO vao_create() {
     return vao;
 }
 
-VAO vao_delete(VAO vao) {
+void vao_delete(VAO vao) {
     glDeleteVertexArrays(1, &vao.handle);
 }
 

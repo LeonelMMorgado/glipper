@@ -4,14 +4,18 @@
 #include <stdio.h>
 #include <time.h>
 #include <math.h>
-#include <gl_settings.h>
+#include <gl_util.h>
 #include <input.h>
-#include <shader_base.h>
+#include <shader.h>
+#include <state.h>
+
+#define SCR_WIDTH 800
+#define SCR_HEIGHT 600
 
 int main(void) {
     
-    GLFWwindow *window = initGL("Hello World", false);
-    if(!window) return -1;
+    // GLFWwindow *window = initGL("Hello World", false);
+    // if(!window) return -1;
 
     // build and compile our shader program
     // ------------------------------------
@@ -24,7 +28,7 @@ int main(void) {
 
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(window)) {
+    // while (!glfwWindowShouldClose(window)) {
         // input
         //=
         processInput(window/*, program*/);
@@ -37,7 +41,7 @@ int main(void) {
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
-    }
+    // }
 
     // de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
@@ -45,11 +49,41 @@ int main(void) {
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
-    glfwTerminate();
-    return 0;
+    // glfwTerminate();
+    // return 0;
 }
 
-// int main(void) {
-    // Window win = window_create();
-    // window_loop(win);
-// }
+void init(State *state) {
+
+}
+
+void tick(State *state) {
+
+}
+
+void update(State *state) {
+
+}
+
+void render(State *state) {
+
+}
+
+void destroy(State *state) {
+    //deallocate all resources
+    glDeleteProgram(state->renderer->program);
+    glfwTerminate();
+}
+
+int main(void) {
+    WinSettings settings = {
+        .inv_bg = false,
+        .inv_border = false,
+        .name = "Hello World!",
+        .size = {SCR_WIDTH, SCR_HEIGHT}
+    };
+    Window win = window_create(settings);
+    if(!win.window) return -1;
+    State state = state_init(&win, &init, &tick, &update, &render, &destroy);
+    state_loop(&state);
+}

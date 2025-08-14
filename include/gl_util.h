@@ -3,7 +3,8 @@
 
 #include <GLFW/glfw3.h>
 #include <stdbool.h>
+#include <window.h>
 
-GLFWwindow *initGL(char *name, bool invisible);
+GLFWwindow *initGL(WinSettings settings);
 
 #endif

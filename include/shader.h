@@ -1,5 +1,5 @@
-#ifndef _SHADER_BASE_H
-#define _SHADER_BASE_H
+#ifndef _SHADER_H
+#define _SHADER_H
 #include <stdio.h>
 #include <stdbool.h>
 #include <glad/glad.h>

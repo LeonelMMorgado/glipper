@@ -10,7 +10,7 @@ typedef struct _vao {
 } VAO;
 
 VAO vao_create();
-VAO vao_delete(VAO vao);
+void vao_delete(VAO vao);
 void vao_bind(VAO vao);
 void vao_attr(VAO vao, VBO vbo, GLuint index, GLint size, GLenum type, GLsizei stride, size_t offset);
 

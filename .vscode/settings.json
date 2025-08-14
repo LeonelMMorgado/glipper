@@ -2,6 +2,15 @@
     "files.associations": {
         "glad.h": "c",
         "glfw3.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "window.h": "c",
+        "stdbool.h": "c",
+        "button.h": "c",
+        "file_util.h": "c",
+        "mouse.h": "c",
+        "camera.h": "c",
+        "vec2.h": "c",
+        "projection.h": "c",
+        "mat4.h": "c"
     }
 }

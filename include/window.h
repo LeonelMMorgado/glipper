@@ -3,23 +3,22 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <button.h>
-#include <mouse.h>
+#include <vmm/vec2.h>
+#include <stdbool.h>
 
-typedef void (*func_window)();
+typedef struct _win_set {
+    char *name;
+    bool inv_border;
+    bool inv_bg;
+    Vector2 size;
+} WinSettings;
 
 typedef struct _window {
     GLFWwindow *window;
 
-    func_window init, destroy, tick, update, render;
-
-    Mouse mouse;
-    Button keyboard_keys[GLFW_KEY_LAST];
-
-    uint64_t last_second, frames, fps, last_frame, frame_delta, ticks, tps, tick_remainder;
+    WinSettings settings;
 } Window;
 
-Window window_create(func_window init, func_window destroy, func_window tick, func_window update, func_window render);
-void window_loop(Window window);
+Window *window_create(WinSettings settings);
 
 #endif

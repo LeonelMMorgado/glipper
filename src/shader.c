@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <shader_base.h>
+#include <shader.h>
 #include <file_util.h>
 
 Shader create_shader(char * vert_path, char * frag_path) {

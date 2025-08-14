@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <button.h>
-#include <matvec.h>
+#include <vmm/vec2.h>
 
 typedef struct _mouse {
     Button buttons[GLFW_MOUSE_BUTTON_LAST];

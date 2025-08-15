@@ -18,8 +18,8 @@ typedef struct _renderer {
 } Renderer;
 
 Renderer *renderer_init(Camera *camera,
-                      Shader *shaders, size_t shaders_size, 
-                      Texture *textures, size_t textures_size
+                        Shader *shaders, size_t shaders_size, 
+                        Texture *textures, size_t textures_size
                     );
 void renderer_set_camera(); //TODO: rethink
 void renderer_destroy(Renderer *renderer);

@@ -4,75 +4,122 @@
 #include <shader.h>
 #include <file_util.h>
 
-Shader create_shader(char * vert_path, char * frag_path) {
+Shader *create_shader(char * vert_path, char * frag_path) {
     int success;
     char infoLog[512];
 
+    Shader *ret = calloc(1, sizeof(Shader));
+
     //vertex shader creation
-    GLuint vert_shader = glCreateShader(GL_VERTEX_SHADER);
+    ret->vertex = glCreateShader(GL_VERTEX_SHADER);
     const char * vert_txt = read_file(vert_path);
     if(!vert_txt) return 0;
-    glShaderSource(vert_shader, 1, &vert_txt, NULL);
-    glCompileShader(vert_shader);
-    glGetShaderiv(vert_shader, GL_COMPILE_STATUS, &success);
+    glShaderSource(ret->vertex, 1, &vert_txt, NULL);
+    glCompileShader(ret->vertex);
+    glGetShaderiv(ret->vertex, GL_COMPILE_STATUS, &success);
     if(!success)
     {
-        glGetShaderInfoLog(vert_shader, 512, NULL, infoLog);
+        glGetShaderInfoLog(ret->vertex, 512, NULL, infoLog);
         printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n");
         printf("%s\n", infoLog);
-        return 0;
+        free(ret);
+        return NULL;
     }
     
     //fragment shader creation
-    GLuint frag_shader = glCreateShader(GL_FRAGMENT_SHADER);
+    ret->fragment = glCreateShader(GL_FRAGMENT_SHADER);
     const char * frag_txt = read_file(frag_path);
     if(!frag_txt) return 0;
-    glShaderSource(frag_shader, 1, &frag_txt, NULL);
-    glCompileShader(frag_shader);
-    glGetShaderiv(frag_shader, GL_COMPILE_STATUS, &success);
+    glShaderSource(ret->fragment, 1, &frag_txt, NULL);
+    glCompileShader(ret->fragment);
+    glGetShaderiv(ret->fragment, GL_COMPILE_STATUS, &success);
     if(!success)
     {
-        glGetShaderInfoLog(frag_shader, 512, NULL, infoLog);
+        glGetShaderInfoLog(ret->fragment, 512, NULL, infoLog);
         printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n");
         printf("%s\n", infoLog);
-        return 0;
+        free(ret);
+        return NULL;
     }
     free((char*)frag_txt);
     free((char*)vert_txt);
     // link shaders
-    GLuint shader_program = glCreateProgram();
-    glAttachShader(shader_program, vert_shader);
-    glAttachShader(shader_program, frag_shader);
-    glLinkProgram(shader_program);
+    ret->program = glCreateProgram();
+    glAttachShader(ret->program, ret->vertex);
+    glAttachShader(ret->program, ret->fragment);
+    glLinkProgram(ret->program);
     // check for linking errors
-    glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
+    glGetProgramiv(ret->program, GL_LINK_STATUS, &success);
     if (!success) {
-        glGetProgramInfoLog(shader_program, 512, NULL, infoLog);
+        glGetProgramInfoLog(ret->program, 512, NULL, infoLog);
         printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n");
         printf("%s\n", infoLog);
         return 0;
     }
-    glDeleteShader(vert_shader);
-    glDeleteShader(frag_shader);
-    return shader_program;
+    // glDeleteShader(ret->vertex);
+    // glDeleteShader(ret->fragment);
+    return ret;
 }
 
-void set_uniform_int(Shader program, char * name, int value) {
-    int loc = glGetUniformLocation(program, name);
-    glUniform1i(loc, value);
+void use_shader(Shader *program) {
+    glUseProgram(program->program);
 }
 
-void get_uniform_int(Shader program, char * name, int * param) {
-    int loc = glGetUniformLocation(program, name);
-    glGetUniformiv(program, loc, param);
+int _get_loc(Shader *program, char *name) {
+    return glGetUniformLocation(program->program, name);
 }
 
-void set_uniform_float(Shader program, char * name, float value) {
-    int loc = glGetUniformLocation(program, name);
-    glUniform1f(loc, value);
+void set_uniform_int(Shader *program, char * name, int value) {
+    glUniform1i(_get_loc(program, name), value);
 }
 
-void get_uniform_float(Shader program, char * name, float * param) {
-    int loc = glGetUniformLocation(program, name);
-    glGetUniformfv(program, loc, param);
+void get_uniform_int(Shader *program, char * name, int * param) {
+    glGetUniformiv(program->program, _get_loc(program, name), param);
+}
+
+void set_uniform_uint(Shader *program, char * name, unsigned int value) {
+    glUniform1ui(_get_loc(program, name), value);
+}
+
+void get_uniform_uint(Shader *program, char * name, unsigned int * param) {
+    glGetUniformuiv(program->program, _get_loc(program, name), param);
+}
+
+void set_uniform_float(Shader *program, char * name, float value) {
+    glUniform1f(_get_loc(program, name), value);
+}
+
+void get_uniform_float(Shader *program, char * name, float * param) {
+    glGetUniformfv(program->program, _get_loc(program, name), param);
+}
+
+void set_uniform_vec2(Shader *program, char * name, Vector2 vec) {
+    glUniform2f(_get_loc(program, name), vec.x, vec.y);
+}
+
+void set_uniform_vec3(Shader *program, char * name, Vector3 vec) {
+    glUniform3f(_get_loc(program, name), vec.x, vec.y, vec.z);
+}
+
+void set_uniform_vec4(Shader *program, char * name, Vector4 vec) {
+    glUniform4f(_get_loc(program, name), vec.x, vec.y, vec.z, vec.w);
+}
+
+void set_uniform_mat3(Shader *program, char * name, Mat3 mat) {
+    glUniformMatrix3fv(_get_loc(program, name), 1, GL_FALSE, mat.m);
+}
+
+void set_uniform_mat4(Shader *program, char * name, Mat4 mat) {
+    glUniformMatrix4fv(_get_loc(program, name), 1, GL_FALSE, mat.m);
+}
+
+void set_uniform_view_proj(Shader *program, ViewProj view_proj) {
+    set_uniform_mat4(program, "view", view_proj.view);
+    set_uniform_mat4(program, "projection", view_proj.proj);
+}
+
+void delete_shader(Shader *program) {
+    glDeleteProgram(program->program);
+    glDeleteShader(program->fragment);
+    glDeleteShader(program->vertex);
 }

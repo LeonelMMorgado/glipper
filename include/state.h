@@ -21,7 +21,7 @@ typedef struct _state {
     
 } State;
 
-State state_init(Window *window, func_state init, func_state tick, func_state update, func_state render, func_state destroy);
+State *state_init(Window *window, func_state init, func_state tick, func_state update, func_state render, func_state destroy);
 void state_loop(State *state);
 
 #endif

@@ -6,7 +6,11 @@
 
 typedef struct _renderer {
     Shader program;
+    //Shader [] size_t
     Camera camera;
+    //Texture [] size_t
 } Renderer;
+
+Shader *renderer_init(); //TODO: textures
 
 #endif

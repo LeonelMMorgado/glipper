@@ -8,20 +8,21 @@
 #include <vao.h>
 
 typedef struct _renderer {
-    Shader program;
-    Shader **shaders; size_t shaders_size;
-    Texture **textures; size_t textures_size;
-    Camera **cameras; size_t cameras_size;
+    Shader *shader;
+    Camera *camera;
     Vector4 clear_color;
     VBO vbo, ibo;
     VAO vao;
 } Renderer;
 
 Renderer *renderer_init(Camera *camera,
-                        Shader *shaders, size_t shaders_size, 
-                        Texture *textures, size_t textures_size
+                        Shader *shader,
+                        Vector4 clear_color
                     );
-void renderer_set_camera(); //TODO: rethink
+void renderer_set_camera(Renderer *renderer, Camera *camera);
+void renderer_set_shader(Renderer *renderer, Shader *shader);
+void renderer_quad_color(Renderer *renderer, uint32_t color);
+void renderer_quad_texture(Renderer *renderer, Texture *texture)
 void renderer_destroy(Renderer *renderer);
 
 #endif

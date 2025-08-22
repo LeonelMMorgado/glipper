@@ -7,3 +7,7 @@ glipper (GL Interface Program Performant Engine Renderer) is an interface for ea
 - texture reader
 
 - model reader
+
+- render quad
+
+- change names

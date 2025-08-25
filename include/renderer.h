@@ -4,6 +4,8 @@
 #include <shader.h>
 #include <camera.h>
 #include <vmm/vec4.h>
+#include <vmm/mat4.h>
+#include <color.h>
 #include <vbo.h>
 #include <vao.h>
 
@@ -17,12 +19,11 @@ typedef struct _renderer {
 
 Renderer *renderer_init(Camera *camera,
                         Shader *shader,
-                        Vector4 clear_color
-                    );
+                        Vector4 clear_color);
 void renderer_set_camera(Renderer *renderer, Camera *camera);
 void renderer_set_shader(Renderer *renderer, Shader *shader);
-void renderer_quad_color(Renderer *renderer, uint32_t color);
-void renderer_quad_texture(Renderer *renderer, Texture *texture)
+void renderer_quad_color(Renderer *renderer, ColorRGBA color, Mat4 model);
+void renderer_quad_texture(Renderer *renderer, Texture *texture, ColorRGBA color, Mat4 model);
 void renderer_destroy(Renderer *renderer);
 
 #endif

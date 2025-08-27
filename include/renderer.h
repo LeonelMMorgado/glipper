@@ -3,6 +3,7 @@
 
 #include <shader.h>
 #include <camera.h>
+#include <texture.h>
 #include <vmm/vec4.h>
 #include <vmm/mat4.h>
 #include <color.h>

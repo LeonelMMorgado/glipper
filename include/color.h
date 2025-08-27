@@ -1,3 +1,6 @@
+#ifndef _COLOR_H
+#define _COLOR_H
+
 #include <stdint.h>
 
 //interpreting color as four byte RGBA value;
@@ -34,3 +37,5 @@ uint8_t get_green_rgba(ColorRGBA color);
 uint8_t get_blue_rgb(ColorRGB color);
 uint8_t get_blue_rgba(ColorRGBA color);
 uint8_t get_alpha_rgba(ColorRGBA color);
+
+#endif

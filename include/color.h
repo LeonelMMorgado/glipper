@@ -2,6 +2,8 @@
 #define _COLOR_H
 
 #include <stdint.h>
+#include <vmm/vec3.h>
+#include <vmm/vec4.h>
 
 //interpreting color as four byte RGBA value;
 typedef uint32_t ColorRGBA;
@@ -16,6 +18,7 @@ typedef uint32_t ColorRGB;
 #define COLOR_REDA 0xff0000ff
 #define COLOR_GREENA 0x00ff00ff
 #define COLOR_BLUEA 0x0000ffff
+#define COLOR_PURPLEA 0xff00ffff
 
 #define COLOR_WHITE 0xffffff
 #define COLOR_BLACK 0x000000
@@ -25,6 +28,7 @@ typedef uint32_t ColorRGB;
 #define COLOR_RED 0xff0000
 #define COLOR_GREEN 0x00ff00
 #define COLOR_BLUE 0x0000ff
+#define COLOR_PURPLE 0xff00ff
 
 ColorRGB make_color_rgb(uint8_t red, uint8_t green, uint8_t blue);
 ColorRGBA make_color_rgba(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha);
@@ -37,5 +41,8 @@ uint8_t get_green_rgba(ColorRGBA color);
 uint8_t get_blue_rgb(ColorRGB color);
 uint8_t get_blue_rgba(ColorRGBA color);
 uint8_t get_alpha_rgba(ColorRGBA color);
+
+Vector3 get_rgb_vec3(ColorRGB color);
+Vector4 get_rgba_vec4(ColorRGBA color);
 
 #endif

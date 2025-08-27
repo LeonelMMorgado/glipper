@@ -4,13 +4,21 @@
 #include <stdlib.h>
 #include <vmm/vec3.h>
 
+typedef struct _vert {
+    Vector3 vert_pos;
+    Vector4 vert_color;
+    Vector2 uv;
+    Vector3 normal;
+} Vertex;
+
 typedef struct _mesh {
-  Vec3 *vertices;
-  size_t vert_size;
-  Vec3 *indexes;
-  size_t index_size;
-  Vec3 *normals;
-  size_t normals_size;
+    Vertex *vertexes; size_t vert_size;
+    Vector3 *indexes; size_t index_size;
 } Mesh;
+
+Mesh *alloc_mesh(size_t vert_size, size_t index_size);
+Mesh *create_mesh();
+void load_mesh_file(Mesh *mesh, const char *file);
+void destroy_mesh(Mesh *mesh);
 
 #endif

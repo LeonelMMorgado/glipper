@@ -22,5 +22,6 @@ Mat4 mat4_translation(float t1, float t2, float t3);
 Mat4 mat4_rotation(float r1, float r2, float r3);
 
 Mat4 mat4_look_at(Vector3 eye, Vector3 center, Vector3 right);
+Mat4 mat4_make_model(Vector3 position, Vector3 rotation, Vector3 scale);
 
 #endif
